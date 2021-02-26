@@ -1,0 +1,91 @@
+Tokens
+id_token number
+token varchar2(20)
+
+Usuarios
+id_usuario number not null  
+tipou number
+nombre varchar(50) 
+email varchar(50)
+usuario varchar(50) 
+password varchar(50) 
+CONSTRAINT "Usuarios_PK" PRIMARY KEY (id_usuario) ENABLE
+
+Admins
+id_admin number not null
+nombre varchar2(200) 
+usuario varchar2(200) 
+password varchar2(200)
+
+Productos
+id_producto number not null 
+nombre varchar2(200)
+cantidad number
+precio number
+
+Compras
+id_compra number not null
+total number
+fecha date
+
+
+#############################################################################################################################################
+Tokens
+Create table Tokens(
+			id_token number, 
+			token varchar2(20),
+			Constraint Pk_id_token Primary key(id_token)
+		    );
+
+Usuarios
+Create table Usuarios(
+			id_usuario number,  
+			tipou number,
+			nombre varchar(50), 
+			email varchar(50), 
+			usuario varchar(50), 
+			password varchar(50), 
+			CONSTRAINT "Usuarios_PK" PRIMARY KEY (id_usuario) ENABLE
+		     );
+CREATE SEQUENCE   Usuarios_SEQ  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE ;
+
+Administrador
+Create table Admins(
+			id_admin number not null,
+			nombre varchar2(200), 
+			usuario varchar2(200), 
+			password varchar2(200), 
+			id_token number, 
+			id_usuario number not null, 
+			Constraint Pk_id_admin Primary key (id_admin), 
+			Constraint Fk1_id_usuario Foreign key (id_usuario) references Usuarios(id_usuario), 
+			Constraint Fk2_id_token Foreign key (id_token)references Tokens(id_token)
+		     );
+
+CREATE SEQUENCE   Usuarios_SEQ  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE ;
+
+
+Productos
+Create table Productos(
+			id_producto number not null, 
+			nombre varchar2(200), 
+			cantidad number, 
+			precio number,
+			id_admin number not null, 
+			id_usuario not null, 
+			Constraint Pk_id_producto Primary key (id_producto), 
+			 );
+CREATE SEQUENCE   Productos_SEQ  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE ;
+
+Compras
+Create table Compras(
+			id_compra number not null, 
+			total number, 
+			fecha date,
+			id_producto number not null, 
+			id_admin not null, 
+			Constraint Pk_id_compra Primary key (id_compra), 
+			Constraint Fk1_id_producto Foreign key (id_producto) references Productos(id_producto), 
+			Constraint Fk2_id_admin Foreign key (id_admin) references Admins(id_admin)
+		     );
+#############################################################################################################################################

@@ -1,0 +1,29 @@
+<?php 
+ function kks()
+{
+$p=rand(1000, 9999);
+$t= sha1(sha1($p));
+echo $t;
+
+}
+
+
+// echo strlen($t),  PHP_EOL;
+// echo bin2hex($t), PHP_EOL;
+ ?>
+ <button onclick="myFunct()">Try it</button>
+ <p id="demo">kks</p>
+
+ <script type="text/javascript">
+
+function myFunct() {
+  var txt;
+  var r = confirm("Press a button!");
+  if (r == true) {
+    txt = <?php kks(); ?>;
+  } else {
+    txt = <?php kks(); ?>;
+  }
+  document.getElementById("demo").innerHTML = txt;
+}
+ </script>
